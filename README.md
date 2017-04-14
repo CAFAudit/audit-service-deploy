@@ -90,8 +90,40 @@ First navigate to the folder where you have downloaded the files to and then run
 
 4. Check the Health of Elasticsearch  
 The health of the Elasticsearch container and / or cluster can be inspect by issuing the following command:    
-	* `curl http://127.0.0.1:9200/_cat/health`  
-	* `1492176100 13:21:40 docker-cluster green 1 1 0 0 0 0 0 0 - 100.0%`
+	`curl http://127.0.0.1:9200/_cat/health`    
+	`1492176100 13:21:40 docker-cluster green 1 1 0 0 0 0 0 0 - 100.0%`
+
+5. Index a simple customer document 
+	`curl -XPUT 'localhost:9200/customer/external/1?pretty&pretty' -H 'Content-Type: application/json' -d'
+	{
+  		"name": "John Doe"
+	}'`
+	Reponse:  
+	`{  
+	  "_index" : "customer",
+	  "_type" : "external",
+	  "_id" : "1",
+	  "_version" : 1,  
+	  "result" : "created",
+	  "_shards" : {
+	    "total" : 2,
+	    "successful" : 1,
+	    "failed" : 0
+	  },
+	  "created" : true
+	}`
+
+6. Retrieve a simple customer document  
+	`curl -XGET 'localhost:9200/customer/external/1?pretty&pretty'`
+	Response:
+	`{
+	  "_index" : "customer",
+	  "_type" : "external",
+	  "_id" : "1",
+	  "_version" : 1,
+	  "found" : true,
+	  "_source" : { "name": "John Doe" }
+	}`
 
 ### Troubleshooting
 
