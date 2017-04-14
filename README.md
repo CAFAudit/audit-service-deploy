@@ -97,8 +97,10 @@ The health of the Elasticsearch container and / or cluster can be inspect by iss
 	`curl -XPUT 'localhost:9200/customer/external/1?pretty&pretty' -H 'Content-Type: application/json' -d'
 	{
   		"name": "John Doe"
-	}'`  
-	Reponse:  
+	}'`
+    
+	Reponse:
+    
 	`{  
 	  "_index" : "customer",
 	  "_type" : "external",
@@ -115,7 +117,9 @@ The health of the Elasticsearch container and / or cluster can be inspect by iss
 
 6. Retrieve a simple customer document  
 	`curl -XGET 'localhost:9200/customer/external/1?pretty&pretty'`  
-	Response:
+  
+	Response:  
+  
 	`{
 	  "_index" : "customer",
 	  "_type" : "external",
