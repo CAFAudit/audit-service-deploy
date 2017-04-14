@@ -19,7 +19,7 @@ The deployment file references at present only references Elasticsearch.
 The Docker Compose file contains the following services:
 
 
-<table><td><img src=./images/audit_service_deploy.jpg /></td></table>
+<table><img src=./images/audit_service_deploy.jpg /></table>
 
 **Elasticsearch**  
 [Elasticsearch](https://www.elastic.co/products/elasticsearch) is a search engine based on [Lucene](https://lucene.apache.org/core/). It provides a distributed, multitenant-capable full-text search engine with an HTTP web interface and schema-free JSON documents. Elasticsearch is developed in Java and is released as open source under the terms of the Apache License.
