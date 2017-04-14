@@ -18,7 +18,10 @@ The deployment file references at present only references Elasticsearch.
 
 The Docker Compose file contains the following services:
 
-##### Elasticsearch
+
+<table><td><img src=./images/audit_service_deploy.jpg /></td></table>
+
+**Elasticsearch**  
 [Elasticsearch](https://www.elastic.co/products/elasticsearch) is a search engine based on [Lucene](https://lucene.apache.org/core/). It provides a distributed, multitenant-capable full-text search engine with an HTTP web interface and schema-free JSON documents. Elasticsearch is developed in Java and is released as open source under the terms of the Apache License.
 
 ### Usage
@@ -39,7 +42,7 @@ The following parameters may be set:
       <tr>
         <td>ES_JAVA_OPTS</td>
         <td>-Xmx256m -Xms256m</td>
-        <td>Environment variable to set heap size, e.g. to use 1GB use ES_JAVA_OPTS="-Xms1g -Xmx1g"</td>
+        <td>Environment variable to set heap size <br />e.g. to use 1GB use ES_JAVA_OPTS="-Xms1g -Xmx1g"</td>
       </tr>
       <tr>
         <td>xpack.security.enabled</td>
@@ -59,7 +62,7 @@ The following parameters may be set:
       <tr>
         <td>xpack.watcher.enabled</td>
         <td>false</td>
-        <td>Set to false to disable X-Pack Watcher</td>
+        <td>Set to false to disable X-Pack watcher</td>
       </tr>
     </table>
 
@@ -87,8 +90,8 @@ First navigate to the folder where you have downloaded the files to and then run
 
 4. Check the Health of Elasticsearch  
 The health of the Elasticsearch container and / or cluster can be inspect by issuing the following command:    
-	* `curl elastic http://127.0.0.1:9200/_cat/health`  
-	* `1472225929 15:38:49 docker-cluster green 2 2 4 2 0 0 0 0 - 100.0%`
+	* `curl http://127.0.0.1:9200/_cat/health`  
+	* `1492176100 13:21:40 docker-cluster green 1 1 0 0 0 0 0 0 - 100.0%`
 
 ### Troubleshooting
 
