@@ -22,13 +22,13 @@ The Docker Compose file contains the following services:
 **Elasticsearch**
 [Elasticsearch](https://www.elastic.co/products/elasticsearch) is a search engine based on [Lucene](https://lucene.apache.org/core/). It provides a distributed, multitenant-capable full-text search engine with an HTTP web interface and schema-free JSON documents. Elasticsearch is developed in Java and is released as open source under the terms of the Apache License.
 
-###Usage
+### Usage
 
-1. Download the files from this repository
+1. Download the files from this repository  
 You can clone this repository using Git or else you can simply download the files as a Zip using the following link:
 https://github.com/CAFAudit/audit-service-deploy/archive/develop.zip
 
-2. Configure the external parameters if required
+2. Configure the external parameters if required  
 The following parameters may be set:
 
     <table>
@@ -60,21 +60,25 @@ The following parameters may be set:
       <tr>
         <td>xpack.watcher.enabled</td>
         <td>false</td>
-        <td>Set to false to disable Watcher</td>
+        <td>Set to false to disable X-Pack Watcher</td>
       </tr>
     </table>
 
-For more information on X-Pack:
-* https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
-* https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
+	For more information on X-Pack:
+	* https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
+	* https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
 
-3. Deploy the services
+3. Deploy the services  
 First navigate to the folder where you have downloaded the files to and then run one of the following commands, depending on whether you are using Docker Compose or Docker Stack:
 
     <table>
       <tr>
         <td><b>Docker Compose</b></td>
-        <td>docker-compose up</td>
+        <td>
+			docker-compose up <br />
+			docker-compose -f docker-compose.yml up <br />
+			docker-compose -f docker-compose.yml up -d
+		</td>
       </tr>
       <tr>
         <td><b>Docker Stack</b></td>
@@ -82,8 +86,8 @@ First navigate to the folder where you have downloaded the files to and then run
       </tr>
     </table>
 
-4. Check the Health of Elasticsearch
-The health of the Elasticsearch container and / or cluster can be inspect by issuing the following command:  
+4. Check the Health of Elasticsearch  
+The health of the Elasticsearch container and / or cluster can be inspect by issuing the following command:    
 * `curl elastic http://127.0.0.1:9200/_cat/health`  
 * `1472225929 15:38:49 docker-cluster green 2 2 4 2 0 0 0 0 - 100.0%`
 
