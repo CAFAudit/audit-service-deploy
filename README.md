@@ -18,14 +18,13 @@ The deployment file references at present only references Elasticsearch.
 
 The Docker Compose file contains the following services:
 
-
-**Elasticsearch**
+##### Elasticsearch
 [Elasticsearch](https://www.elastic.co/products/elasticsearch) is a search engine based on [Lucene](https://lucene.apache.org/core/). It provides a distributed, multitenant-capable full-text search engine with an HTTP web interface and schema-free JSON documents. Elasticsearch is developed in Java and is released as open source under the terms of the Apache License.
 
 ### Usage
 
 1. Download the files from this repository  
-You can clone this repository using Git or else you can simply download the files as a Zip using the following link:
+You can clone this repository using Git or else you can simply download the files as a Zip using the following link:  
 https://github.com/CAFAudit/audit-service-deploy/archive/develop.zip
 
 2. Configure the external parameters if required  
@@ -88,12 +87,12 @@ First navigate to the folder where you have downloaded the files to and then run
 
 4. Check the Health of Elasticsearch  
 The health of the Elasticsearch container and / or cluster can be inspect by issuing the following command:    
-* `curl elastic http://127.0.0.1:9200/_cat/health`  
-* `1472225929 15:38:49 docker-cluster green 2 2 4 2 0 0 0 0 - 100.0%`
+	* `curl elastic http://127.0.0.1:9200/_cat/health`  
+	* `1472225929 15:38:49 docker-cluster green 2 2 4 2 0 0 0 0 - 100.0%`
 
 ### Troubleshooting
 
-##### Errors during Start Up
+#### Errors during Start Up
 
 If the following error appears during start up and the Elasticsearch container shuts down shortly after start up:
 > elasticsearch_1  | ERROR: bootstrap checks failed  
@@ -104,7 +103,7 @@ This error can be resolved by issuing the following command on the Linux host:
 
 More information regarding `vm.max_map_count` can be found in the Elasticsearch official Documentation [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#docker-cli-run-prod-mode) and [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html).
 
-##### Warnings during Start Up
+#### Warnings during Start Up
 
 If the following warning is seen during start up it can be disregarded:
 > audit_elasticsearch | [2017-04-14T09:20:02,597][WARN ][i.n.u.i.MacAddressUtil   ] Failed to find a usable hardware address from the network interfaces; using random bytes: 1a:e1:8d:83:20:f5:d0:3c
