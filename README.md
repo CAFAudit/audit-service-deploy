@@ -40,6 +40,16 @@ The following parameters may be set:
         <th>Description</th>
       </tr>
       <tr>
+        <td>cluster.name</td>
+        <td>docker-cluster</td>
+        <td>A node can only join a cluster when it shares its cluster.name with all the other nodes in the cluster</td>
+      </tr>
+      <tr>
+        <td>bootstrap.memory_lock</td>
+        <td>true</td>
+        <td>It is vitally important to the health of a node that none of the JVM is ever swapped out to disk</td>
+      </tr>
+      <tr>
         <td>ES_JAVA_OPTS</td>
         <td>-Xmx256m -Xms256m</td>
         <td>Environment variable to set heap size <br />e.g. to use 1GB use ES_JAVA_OPTS="-Xms1g -Xmx1g"</td>
@@ -79,7 +89,7 @@ First navigate to the folder where you have downloaded the files to and then run
         <td>
 			docker-compose up  <small>(docker-compose defaults to use a file called <i><b>docker-compose.yml</b></i>)</small><br />
 			docker-compose -f docker-compose.yml up <small>(An alternative filename can be provided using the <i><b>-f</b></i> flag</small> <br />
-			docker-compose -f docker-compose.yml up -d  /<small><i><b>-d</b></i> flag is for "detached mode" i.e. run containers in the background</small>
+			docker-compose -f docker-compose.yml up -d <small>(<i><b>-d</b></i> flag is for "detached mode" i.e. run containers in the background)</small>
 		</td>
       </tr>
       <tr>
