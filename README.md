@@ -2,7 +2,7 @@
 
 ### Introduction
 
-The Audit Service is designed to provide auditing of user and system actions by defining the required events and the information associated with each event.  This definition is registered with the Audit service and used to create a Java SDK to record the audited events.  The Audit service is multi-tenant aware, which requires an application producing events to register each new tenant.  Applications send events using the generated Java SDK to Elasticsearch where they are Indexed according to tenant.
+The Audit Service is designed to provide auditing of user and system actions by defining the required events and the information associated with each event.  This definition is registered with the Audit service and used to create a Java SDK to record the audited events.  The Audit service is multi-tenant aware.  Applications send events using the generated Java SDK to Elasticsearch where they are indexed according to each tenant.
 
 ### Deployment Repository
 
@@ -22,7 +22,7 @@ The Docker Compose file contains the following services:
 <table><img src=./images/audit_service_deploy.jpg /></table>
 
 **Elasticsearch**  
-[Elasticsearch](https://www.elastic.co/products/elasticsearch) is a search engine based on [Lucene](https://lucene.apache.org/core/). It provides a distributed, multitenant-capable full-text search engine with an HTTP web interface and schema-free JSON documents. Elasticsearch is developed in Java and is released as open source under the terms of the Apache License.
+[Elasticsearch](https://www.elastic.co/products/elasticsearch) is a search engine based on [Lucene](https://lucene.apache.org/core/). It provides a distributed, multi-tenant capable full-text search engine with an HTTP web interface and schema-free JSON documents. Elasticsearch is developed in Java and is released as open source under the terms of the Apache License.
 
 ### Usage
 
@@ -77,9 +77,9 @@ First navigate to the folder where you have downloaded the files to and then run
       <tr>
         <td><b>Docker Compose</b></td>
         <td>
-			docker-compose up <br />
-			docker-compose -f docker-compose.yml up <br />
-			docker-compose -f docker-compose.yml up -d
+			docker-compose up  <small>(docker-compose defaults to use a file called <i><b>docker-compose.yml</b></i>)</small><br />
+			docker-compose -f docker-compose.yml up <small>(An alternative filename can be provided using the <i><b>-f</b></i> flag</small> <br />
+			docker-compose -f docker-compose.yml up -d  /<small><i><b>-d</b></i> flag is for "detached mode" i.e. run containers in the background</small>
 		</td>
       </tr>
       <tr>
@@ -89,7 +89,7 @@ First navigate to the folder where you have downloaded the files to and then run
     </table>
 
 4. Check the Health of Elasticsearch  
-The health of the Elasticsearch container and / or cluster can be inspect by issuing the following command:    
+The health of the Elasticsearch container and / or cluster can be inspected by issuing the following command:    
 	`curl http://127.0.0.1:9200/_cat/health`    
 	`1492176100 13:21:40 docker-cluster green 1 1 0 0 0 0 0 0 - 100.0%`
 
