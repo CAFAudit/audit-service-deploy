@@ -2,7 +2,7 @@
 
 ### Introduction
 
-The Audit Service is designed to provide auditing of user and system actions by defining the required events and the information associated with each event.  This definition is registered with the Audit service and used to create a Java SDK to record the audited events.  The Audit service is multi-tenant aware.  Applications send events using the generated Java SDK to Elasticsearch where they are indexed according to each tenant.
+The Audit Service is designed to provide auditing of user and system actions by defining the required events and the information associated with each event.  An application audit event definition file can be used with the Audit service to generate an application-specific, client-side auditing library.  The Audit service is multi-tenant aware.  Applications send events using the generated client-side auditing library to Elasticsearch where they are indexed according to each tenant.
 
 ### Deployment Repository
 
@@ -12,7 +12,7 @@ The only pre-requisite required to get started is that Docker must be available 
 
 The deployment files are in Docker Compose v3 format, and they are compatible with both Docker Compose and Docker Stack.
 
-The deployment file references at present only references Elasticsearch.
+The deployment file, at present, only references Elasticsearch.
 
 ### Demonstration
 
@@ -88,8 +88,7 @@ First navigate to the folder where you have downloaded the files to and then run
         <td><b>Docker Compose</b></td>
         <td>
 			docker-compose up  <small>(docker-compose defaults to use a file called <i><b>docker-compose.yml</b></i>)</small><br />
-			docker-compose -f docker-compose.yml up <small>(An alternative filename can be provided using the <i><b>-f</b></i> flag</small> <br />
-			docker-compose -f docker-compose.yml up -d <small>(<i><b>-d</b></i> flag is for "detached mode" i.e. run containers in the background)</small>
+			docker-compose up -d <small>(<i><b>-d</b></i> flag is for "detached mode" i.e. run containers in the background)</small>
 		</td>
       </tr>
       <tr>
@@ -100,7 +99,7 @@ First navigate to the folder where you have downloaded the files to and then run
 
 4. Check the Health of Elasticsearch  
 The health of the Elasticsearch container and / or cluster can be inspected by issuing the following command:    
-	`curl http://127.0.0.1:9200/_cat/health`    
+	`curl http://localhost:9200/_cat/health`    
 	`1493041686 13:48:06 docker-cluster green 2 2 14 7 0 0 0 0 - 100.0%`
 
 5. Index a simple customer document 
