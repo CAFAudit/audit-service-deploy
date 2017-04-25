@@ -2,7 +2,7 @@
 
 ### Introduction
 
-The Audit Service is designed to provide auditing of user and system actions by defining the required events and the information associated with each event.  An application audit event definition file can be used with the Audit service to generate an application-specific, client-side auditing library.  The Audit service is multi-tenant aware.  Applications send events using the generated client-side auditing library to Elasticsearch where they are indexed according to each tenant.
+The Audit Service is designed to provide auditing of user and system actions by defining the required events and the information associated with each event. An application audit event definition file can be used to generate an application-specific, client-side auditing library. The Audit service is multi-tenant aware. Applications send events using the generated client-side auditing library to Elasticsearch where they are indexed according to each tenant.
 
 ### Deployment Repository
 
