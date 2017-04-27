@@ -4,14 +4,14 @@ services:
 
   elasticsearch1:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.3.1
-    container_name: elasticsearch1
+#    container_name: elasticsearch1
     ports:
-      - 9200:9200
-      - 9300:9300
+      - "${ELASTICSEARCH_HTTP_PORT:-9200}:9200"
+      - "${ELASTICSEARCH_NETWORK_PORT:-9300}:9300"
     environment:
       cluster.name: "docker-cluster"
       bootstrap.memory_lock: "true"
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+      ES_JAVA_OPTS: "${ES_JAVA_OPTS:--Xmx256m -Xms256m}"
       # disable X-Pack
       # see https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
       #     https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
@@ -30,16 +30,16 @@ services:
       resources:
         limit:
           memory: 1gb
-    cap_add:
-      - IPC_LOCK
+#    cap_add:
+#      - IPC_LOCK
     volumes:
       - esdata1:/usr/share/elasticsearch/data
-    networks:
-      - esnet
+#    networks:
+#      - esnet
 
   elasticsearch2:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.3.1
-    container_name: elasticsearch2
+#    container_name: elasticsearch2
     environment:
       cluster.name: "docker-cluster"
       bootstrap.memory_lock: "true"
@@ -63,12 +63,12 @@ services:
       resources:
         limit:
           memory: 1gb
-    cap_add:
-      - IPC_LOCK
+#    cap_add:
+#      - IPC_LOCK
     volumes:
       - esdata2:/usr/share/elasticsearch/data
-    networks:
-      - esnet
+#    networks:
+#      - esnet
 
 volumes:
   esdata1:
@@ -76,6 +76,6 @@ volumes:
   esdata2:
     driver: local
     
-networks:
-  esnet:
-      driver: bridge
+#networks:
+#  esnet:
+#      driver: bridge
