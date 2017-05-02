@@ -35,24 +35,44 @@ The following parameters may be set:
 
     <table>
       <tr>
+		<th>Docker Compose Variable</th>
         <th>Environment Variable</th>
         <th>Default</th>
         <th>Description</th>
       </tr>
       <tr>
         <td>cluster.name</td>
+		<td>ELASTICSEARCH_CLUSTER_NAME</td>
         <td>docker-cluster</td>
         <td>A node can only join a cluster when it shares its cluster.name with all the other nodes in the cluster</td>
       </tr>
       <tr>
-        <td>bootstrap.memory_lock</td>
-        <td>true</td>
-        <td>It is vitally important to the health of a node that none of the JVM is ever swapped out to disk</td>
-      </tr>
-      <tr>
         <td>ES_JAVA_OPTS</td>
+		<td>ES_JAVA_OPTS</td>
         <td>-Xmx256m -Xms256m</td>
         <td>Environment variable to set heap size <br />e.g. to use 1GB use ES_JAVA_OPTS="-Xms1g -Xmx1g"</td>
+      </tr>
+      <tr>
+        <td>ports</td>
+		<td>ELASTICSEARCH_HTTP_PORT</td>
+        <td>9200</td>
+        <td>HTTP Port used for RESTful API</td>
+      </tr>
+      <tr>
+        <td>ports</td>
+		<td>ELASTICSEARCH_NETWORK_PORT</td>
+        <td>9300</td>
+        <td>Network Communication Port used for Java API, the Elasticsearch transport protocol and Cluster Communications</td>
+      </tr>
+    </table>
+
+3. Disable X-Pack  
+X-Pack is provided as default within the Elasticsearch image.  To disable X-Pack as currently no license is held for the use of X-Pack set the following parameters.
+    <table>
+      <tr>
+		<th>Docker Compose Variable</th>
+        <th>Value</th>
+        <th>Description</th>
       </tr>
       <tr>
         <td>xpack.security.enabled</td>
@@ -74,13 +94,12 @@ The following parameters may be set:
         <td>false</td>
         <td>Set to false to disable X-Pack watcher</td>
       </tr>
-    </table>
-
+    </table> 
 	For more information on X-Pack:
 	* https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
 	* https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
 
-3. Deploy the services  
+4. Deploy the services  
 First navigate to the folder where you have downloaded the files to and then run one of the following commands, depending on whether you are using Docker Compose or Docker Stack:
 
     <table>
@@ -97,12 +116,12 @@ First navigate to the folder where you have downloaded the files to and then run
       </tr>
     </table>
 
-4. Check the Health of Elasticsearch  
+5. Check the Health of Elasticsearch  
 The health of the Elasticsearch container and / or cluster can be inspected by issuing the following command:    
 	`curl http://localhost:9200/_cat/health`    
 	`1493041686 13:48:06 docker-cluster green 2 2 14 7 0 0 0 0 - 100.0%`
 
-5. Index a simple customer document 
+6. Index a simple customer document 
 	`curl -XPUT 'localhost:9200/customer/external/1?pretty&pretty' -H 'Content-Type: application/json' -d'
 	{
   		"name": "John Doe"
@@ -124,7 +143,7 @@ The health of the Elasticsearch container and / or cluster can be inspected by i
          "created" : true
     }`
 
-6. Retrieve a simple customer document  
+7. Retrieve a simple customer document  
 	`curl -XGET 'localhost:9200/customer/external/1?pretty&pretty'`  
   
 	Response:  
@@ -143,8 +162,8 @@ The health of the Elasticsearch container and / or cluster can be inspected by i
 #### Errors during Start Up
 
 If the following error appears during start up and the Elasticsearch container shuts down shortly after start up:
-> elasticsearch_1  | ERROR: bootstrap checks failed  
-> elasticsearch_1  | max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
+> elasticsearch1  | ERROR: bootstrap checks failed  
+> elasticsearch1  | max virtual memory areas vm.max_map_count [65530] is too low, increase to at least [262144]
 
 This error can be resolved by issuing the following command on the Linux host:  
 * `sudo sysctl -w vm.max_map_count=262144`
