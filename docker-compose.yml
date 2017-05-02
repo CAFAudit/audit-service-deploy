@@ -9,8 +9,7 @@ services:
       - "${ELASTICSEARCH_NETWORK_PORT:-9300}:9300"
     environment:
       cluster.name: "${ELASTICSEARCH_CLUSTER_NAME:-docker-cluster}"
-      bootstrap.memory_lock: "true"
-      ES_JAVA_OPTS: "${ES_JAVA_OPTS:--Xmx256m -Xms256m}"
+      ES_JAVA_OPTS: "${ES_JAVA_OPTS:--Xmx512m -Xms512m}"
       # disable X-Pack
       # see https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
       #     https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
@@ -29,8 +28,6 @@ services:
       resources:
         limit:
           memory: 1gb
-#    cap_add:
-#      - IPC_LOCK
     volumes:
       - esdata1:/usr/share/elasticsearch/data
 
@@ -38,8 +35,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:5.3.1
     environment:
       cluster.name: "docker-cluster"
-      bootstrap.memory_lock: "true"
-      ES_JAVA_OPTS: "${ES_JAVA_OPTS:--Xmx256m -Xms256m}"
+      ES_JAVA_OPTS: "${ES_JAVA_OPTS:--Xmx512m -Xms512m}"
       discovery.zen.ping.unicast.hosts: elasticsearch1
       # disable X-Pack
       # see https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
@@ -59,8 +55,6 @@ services:
       resources:
         limit:
           memory: 1gb
-#    cap_add:
-#      - IPC_LOCK
     volumes:
       - esdata2:/usr/share/elasticsearch/data
 
