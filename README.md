@@ -35,69 +35,26 @@ The following parameters may be set:
 
     <table>
       <tr>
-		<th>Docker Compose Variable</th>
         <th>Environment Variable</th>
         <th>Default</th>
         <th>Description</th>
       </tr>
       <tr>
-        <td>cluster.name</td>
-		<td>ELASTICSEARCH_CLUSTER_NAME</td>
-        <td>docker-cluster</td>
-        <td>A node can only join a cluster when it shares its cluster.name with all the other nodes in the cluster</td>
-      </tr>
-      <tr>
         <td>ES_JAVA_OPTS</td>
-		<td>ES_JAVA_OPTS</td>
-        <td>-Xmx256m -Xms256m</td>
+        <td>&#8209Xmx256m&nbsp;&#8209Xms256m</td>
         <td>Environment variable to set heap size <br />e.g. to use 1GB use ES_JAVA_OPTS="-Xms1g -Xmx1g"</td>
       </tr>
       <tr>
-        <td>ports</td>
-		<td>ELASTICSEARCH_HTTP_PORT</td>
+        <td>ELASTICSEARCH_HTTP_PORT</td>
         <td>9200</td>
         <td>HTTP Port used for RESTful API</td>
       </tr>
       <tr>
-        <td>ports</td>
-		<td>ELASTICSEARCH_NETWORK_PORT</td>
+        <td>ELASTICSEARCH_NETWORK_PORT</td>
         <td>9300</td>
         <td>Network Communication Port used for Java API, the Elasticsearch transport protocol and Cluster Communications</td>
       </tr>
     </table>
-
-3. Disable X-Pack  
-X-Pack is provided as default within the Elasticsearch image.  To disable X-Pack as currently no license is held for the use of X-Pack set the following parameters.
-    <table>
-      <tr>
-		<th>Docker Compose Variable</th>
-        <th>Value</th>
-        <th>Description</th>
-      </tr>
-      <tr>
-        <td>xpack.security.enabled</td>
-        <td>false</td>
-        <td>Set to false to disable X-Pack security</td>
-      </tr>
-      <tr>
-        <td>xpack.monitoring.enabled</td>
-        <td>false</td>
-        <td>Set to false to disable X-Pack monitoring</td>
-      </tr>
-      <tr>
-        <td>xpack.graph.enabled</td>
-        <td>false</td>
-        <td>Set to false to disable X-Pack graph</td>
-      </tr>
-      <tr>
-        <td>xpack.watcher.enabled</td>
-        <td>false</td>
-        <td>Set to false to disable X-Pack watcher</td>
-      </tr>
-    </table> 
-	For more information on X-Pack:
-	* https://www.elastic.co/guide/en/x-pack/current/xpack-settings.html
-	* https://www.elastic.co/guide/en/x-pack/current/installing-xpack.html#xpack-enabling
 
 4. Deploy the services  
 First navigate to the folder where you have downloaded the files to and then run one of the following commands, depending on whether you are using Docker Compose or Docker Stack:
@@ -106,9 +63,9 @@ First navigate to the folder where you have downloaded the files to and then run
       <tr>
         <td><b>Docker Compose</b></td>
         <td>
-			docker-compose up  <small>(docker-compose defaults to use a file called <i><b>docker-compose.yml</b></i>)</small><br />
-			docker-compose up -d <small>(<i><b>-d</b></i> flag is for "detached mode" i.e. run containers in the background)</small>
-		</td>
+            docker-compose up  <small>(docker-compose defaults to use a file called <i><b>docker-compose.yml</b></i>)</small><br />
+            docker-compose up -d <small>(<i><b>-d</b></i> flag is for "detached mode" i.e. run containers in the background)</small>
+        </td>
       </tr>
       <tr>
         <td><b>Docker Stack</b></td>
@@ -118,18 +75,20 @@ First navigate to the folder where you have downloaded the files to and then run
 
 5. Check the Health of Elasticsearch  
 The health of the Elasticsearch container and / or cluster can be inspected by issuing the following command:    
-	`curl http://localhost:9200/_cat/health`    
-	`1493041686 13:48:06 docker-cluster green 2 2 14 7 0 0 0 0 - 100.0%`
+    `curl http://<DOCKER_HOST>:<ELASTICSEARCH_HTTP_PORT>/_cat/health`  
+    i.e. `curl http://localhost:9200/_cat/health`  
+    `1493041686 13:48:06 docker-cluster green 2 2 0 0 0 0 0 0 - 100.0%`
 
 6. Index a simple customer document 
-	`curl -XPUT 'localhost:9200/customer/external/1?pretty&pretty' -H 'Content-Type: application/json' -d'
-	{
-  		"name": "John Doe"
-	}'`
+    `curl -XPUT '<DOCKER_HOST>:<ELASTICSEARCH_HTTP_PORT>/customer/external/1?pretty&pretty' -H 'Content-Type: application/json' -d'  
+    i.e. `curl -XPUT 'localhost:9200/customer/external/1?pretty&pretty' -H 'Content-Type: application/json' -d'
+    {
+        "name": "John Doe"
+    }'`
     
-	Reponse:
+    Reponse:
     
-	`{
+    `{
          "_index" : "customer",
          "_type" : "external",
          "_id" : "1",
@@ -144,18 +103,19 @@ The health of the Elasticsearch container and / or cluster can be inspected by i
     }`
 
 7. Retrieve a simple customer document  
-	`curl -XGET 'localhost:9200/customer/external/1?pretty&pretty'`  
+    `curl -XGET '<DOCKER_HOST>:<ELASTICSEARCH_HTTP_PORT>/customer/external/1?pretty&pretty'`  
+    i.e. `curl -XGET 'localhost:9200/customer/external/1?pretty&pretty'`  
   
-	Response:  
+    Response:  
   
-	`{
-	  "_index" : "customer",
-	  "_type" : "external",
-	  "_id" : "1",
-	  "_version" : 1,
-	  "found" : true,
-	  "_source" : { "name": "John Doe" }
-	}`
+    `{
+      "_index" : "customer",
+      "_type" : "external",
+      "_id" : "1",
+      "_version" : 1,
+      "found" : true,
+      "_source" : { "name": "John Doe" }
+    }`
 
 ### Troubleshooting
 
