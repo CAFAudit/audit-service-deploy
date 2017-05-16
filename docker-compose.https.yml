@@ -1,0 +1,9 @@
+version: '3'
+services:
+  auditService:
+    environment:
+      SSL_TOMCAT_CA_CERT_LOCATION: /keystore/tomcat.keystore
+    volumes:
+      - ${AUDIT_SERVICE_KEYSTORE:-./keystore/.keystore}:/keystore/tomcat.keystore
+    ports:
+      - "${AUDIT_SERVICE_PORT_HTTPS:-25081}:8443"

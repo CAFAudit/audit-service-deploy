@@ -24,6 +24,9 @@ The Docker Compose file contains the following services:
 **Elasticsearch**  
 [Elasticsearch](https://www.elastic.co/products/elasticsearch) is a search engine based on [Lucene](https://lucene.apache.org/core/). It provides a distributed, multi-tenant capable full-text search engine with an HTTP web interface and schema-free JSON documents. Elasticsearch is developed in Java and is released as open source under the terms of the Apache License.
 
+**Audit Web Service**
+The Audit Web Service is a RESTful Web Service and provides a simple API. It can be used to index audit event messages into Elasticsearch. Each audit event message will comprise a set of fixed fields including the application the audit event message is associated with, the user that triggered the audit event as well as the tenant that the user belongs to. The audit event message will also include additional fields specific to the application. 
+
 ### Usage
 
 1. Download the files from this repository  
@@ -74,9 +77,14 @@ The following parameters may be set:
         <td>9302</td>
         <td>Network Communication Port used for Java API, the Elasticsearch transport protocol and Cluster Communications on Node3</td>
       </tr>
+      <tr>
+        <td>AUDIT_SERVICE_PORT</td>
+        <td>25080</td>
+        <td>This is the port that the Audit Web Service is configured to listen on.</td>
+      </tr>
     </table>
 
-4. Deploy the services  
+3. Deploy the services  
 First navigate to the folder where you have downloaded the files to and then run one of the following commands, depending on whether you are using Docker Compose or Docker Stack:
 
     <table>
@@ -93,13 +101,13 @@ First navigate to the folder where you have downloaded the files to and then run
       </tr>
     </table>
 
-5. Check the Health of Elasticsearch  
+4. Check the Health of Elasticsearch  
 The health of the Elasticsearch container and / or cluster can be inspected by issuing the following command:    
     `curl http://<DOCKER_HOST>:<ELASTICSEARCH_HTTP_PORT>/_cat/health`  
     i.e. `curl http://localhost:9200/_cat/health`  
     `1493041686 13:48:06 docker-cluster green 2 2 0 0 0 0 0 0 - 100.0%`
 
-6. Index a simple customer document 
+5. Index a simple customer document 
     `curl -XPUT '<DOCKER_HOST>:<ELASTICSEARCH_HTTP_PORT>/customer/external/1?pretty' -H 'Content-Type: application/json' -d '{"name": "John Doe"}'`  
     i.e. `curl -XPUT 'localhost:9200/customer/external/1?pretty' -H 'Content-Type: application/json' -d '{"name": "John Doe"}'`    
     Reponse:
@@ -118,7 +126,7 @@ The health of the Elasticsearch container and / or cluster can be inspected by i
          "created" : true
     }`
 
-7. Retrieve a simple customer document  
+6. Retrieve a simple customer document  
     `curl -XGET '<DOCKER_HOST>:<ELASTICSEARCH_HTTP_PORT>/customer/external/1?pretty'`  
     i.e. `curl -XGET 'localhost:9200/customer/external/1?pretty'`  
   
@@ -132,6 +140,146 @@ The health of the Elasticsearch container and / or cluster can be inspected by i
       "found" : true,
       "_source" : { "name": "John Doe" }
     }`
+
+7. Navigate to the Audit Web Service UI  
+    The Audit Web Service is a RESTful Web Service and is primarily intended for programmatic access, however it also ships with a Swagger-generated user-interface.
+
+    Using a browser, navigate to the `/caf-audit-service-ui` endpoint on the Audit Web Service:  
+
+        http://docker-host:25080/caf-audit-service-ui
+
+    Adjust 'docker-host' to be the name of your own Docker Host and adjust the port if you are not using the default.
+
+8. Index an audit event message into Elasticsearch 
+    Go to the `POST /auditevents` operation.
+
+    - Enter the following audit event message details into the `newAuditEvent` parameter:
+
+        <pre><code>{
+		"applicationId": "SampleApp",
+		"processId": "77baef40-2744-46ab-9b69-a349a19930c5",
+		"threadId": 1,
+		"eventOrder": 1,
+		"eventTime": "2017-05-16T12:16:11.174Z",
+		"eventTimeSource": "myHostName",
+		"userId": "12c3d730-f86a-443f-9142-93ec4981b8e1",
+		"tenantId": "123418dc-2e24-406e-91b8-e26122b0a995",
+		"correlationId": "test123",
+		"eventTypeId": "viewDocument",
+		"eventCategoryId": "documentEvents",
+		"eventParams": [
+		{
+		  "paramName": "docId",
+		  "paramType": "long",
+		  "paramValue": "123"
+		}
+		]
+        }</code></pre>
+
+	- Click on the 'Try it out!' button.
+
+9. Retrieve the audit event message  
+    `curl -XGET '<DOCKER_HOST>:<ELASTICSEARCH_HTTP_PORT>/<index>/_search?q=userId:<userId>&pretty'`  
+    i.e. `curl -XGET 'localhost:9200/123418dc-2e24-406e-91b8-e26122b0a995_audit/_search?q=userId:12c3d730-f86a-443f-9142-93ec4981b8e1&pretty'`  
+  
+    Response:  
+
+	`{
+	  "took" : 33,
+	  "timed_out" : false,
+	  "_shards" : {
+	    "total" : 5,
+	    "successful" : 5,
+	    "failed" : 0
+	  },
+	  "hits" : {
+	    "total" : 1,
+	    "max_score" : 0.2876821,
+	    "hits" : [
+	      {
+	        "_index" : "123418dc-2e24-406e-91b8-e26122b0a995_audit",
+	        "_type" : "cafAuditEvent",
+	        "_id" : "AVwQeJ05uf04cpVnLlCF",
+	        "_score" : 0.2876821,
+	        "_source" : {
+	          "threadId" : 1,
+	          "eventTypeId" : "viewDocument",
+	          "processId" : "77baef40-2744-46ab-9b69-a349a19930c5",
+	          "eventTime" : "2017-05-16T12:16:11.174Z",
+	          "eventTimeSource" : "myHostName",
+	          "correlationId" : "test123",
+	          "applicationId" : "SampleApp",
+	          "eventOrder" : 1,
+	          "userId" : "12c3d730-f86a-443f-9142-93ec4981b8e1",
+	          "eventCategoryId" : "documentEvents",
+	          "docId_CALng" : 123
+	        }
+	      }
+	    ]
+	  }
+	}`
+
+### Override Files
+Docker Compose supports the concept of Override Files which can be used to modify the service definitions in the main Docker Compose files, or to add extra service definitions.
+
+The following override files are supplied alongside the main Docker Compose file for the service:
+
+<table>
+  <tr>
+    <th>Override File</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>docker&#8209;compose.https.yml</td>
+    <td>This override file can be used to activate a HTTPS port in the Audit Web Service which can be used for secure communication.<p>
+    <p>
+    You must provide a keystore file either at the default path (./keystore/.keystore) or a custom path and set the <code>AUDIT_SERVICE_KEYSTORE</code> environment variable.<p>
+    <p>
+    The default port exposed for HTTPS communication is 25081 but this can be overridden by supplying the environment variable <code>AUDIT_SERVICE_PORT_HTTPS</code>.</td>
+  </tr>
+</table>
+
+Use the -f switch to apply override files.  For example, to start the services with the docker-compose.debug.yml file applied run the following command:
+
+    docker-compose -f docker-compose.yml -f docker-compose.debug.yml up
+
+#### Activating HTTPS Endpoint
+
+Optionally, the `docker-compose.https.yml` override can be used to activate a HTTPS endpoint for secure communication with the Audit Web Service.
+
+You can generate a default keystore, setting both the keystore password and key password as `changeit` by running the following command:
+
+`keytool -genkey -alias tomcat -keystore .keystore -keyalg RSA`
+
+Generating a custom keystore with your own password/alias/protocol is not currently supported. For more information on generating keystores see these [instructions](https://tomcat.apache.org/tomcat-7.0-doc/ssl-howto.html).
+
+Place this keystore file in a folder called `keystore` in audit-service-deploy. Name it `.keystore` or else provide your own custom path by setting `AUDIT_SERVICE_KEYSTORE` (e.g. `./mykeystore/ks.p12`).
+
+You can optionally override the default HTTPS port (25081) by providing the environment variable `AUDIT_SERVICE_PORT_HTTPS`.
+
+Run the following command:
+
+`docker-compose -f docker-compose.yml -f docker-compose.https.yml up`.
+
+Additional override parameters can be set and their function is described below.
+
+<table>
+  <tr>
+    <th>Environment Variable</th>
+    <th>Default</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>AUDIT_SERVICE_PORT_HTTPS</td>
+    <td>25081</td>
+    <td>This is the HTTPS port to be exposed in the Audit Web Service to allow secure communication. Unless a keystore is provided, the HTTPS port will not be active.</td>
+  </tr>
+  <tr>
+    <td>AUDIT_SERVICE_KEYSTORE</td>
+    <td>./keystore/.keystore</td>
+    <td>If you are activating the HTTPS port, you can override the default keystore location to provide your own keystore as a volume. This is the path of the keystore file (i.e. `./mykeystore/ks.p12`).</td>
+  </tr>
+</table>
 
 ### Troubleshooting
 
