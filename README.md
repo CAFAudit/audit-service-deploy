@@ -220,7 +220,7 @@ The health of the Elasticsearch container and / or cluster can be inspected by i
 	}`
 
 ### Override Files
-Docker Compose supports the concept of Override Files which can be used to modify the service definitions in the main Docker Compose files, or to add extra service definitions.
+Docker Compose supports the concept of override files which can be used to modify the service definitions in the main Docker Compose files, or to add extra service definitions.
 
 The following override files are supplied alongside the main Docker Compose file for the service:
 
@@ -235,33 +235,39 @@ The following override files are supplied alongside the main Docker Compose file
     <p>
     You must provide a keystore file either at the default path (./keystore/.keystore) or a custom path and set the <code>AUDIT_SERVICE_KEYSTORE</code> environment variable.<p>
     <p>
-    The default port exposed for HTTPS communication is 25081 but this can be overridden by supplying the environment variable <code>AUDIT_SERVICE_PORT_HTTPS</code>.</td>
+    The default port exposed for HTTPS communication is 25081 but this can be overridden by supplying the environment variable <code>AUDIT_SERVICE_PORT_HTTPS</code>.
+	<p>
+    Additional environment variables can be supplied if the keystore file has been generated using custom values for alias, keystore and key passwords.</td>
   </tr>
 </table>
 
-Use the -f switch to apply override files.  For example, to start the services with the docker-compose.debug.yml file applied run the following command:
+Use the -f switch to apply override files.  For example, to start the services with the docker-compose.https.yml file applied run the following command:
 
-    docker-compose -f docker-compose.yml -f docker-compose.debug.yml up
+    docker-compose -f docker-compose.yml -f docker-compose.https.yml up
 
 #### Activating HTTPS Endpoint
 
-Optionally, the `docker-compose.https.yml` override can be used to activate a HTTPS endpoint for secure communication with the Audit Web Service.
+The `docker-compose.https.yml` override file should be used to activate a HTTPS endpoint for secure communication with the Audit Web Service.
 
-You can generate a default keystore, setting both the keystore password and key password as `changeit` by running the following command:
+##### Create the Keystore
+First of all, you need to generate a keystore file. For more information on generating keystores see these [instructions](https://tomcat.apache.org/tomcat-7.0-doc/ssl-howto.html).
+
+A default keystore can be generated using the following command. Specify `changeit` when asked for both the keystore and key passwords.
 
 `keytool -genkey -alias tomcat -keystore .keystore -keyalg RSA`
 
-Generating a custom keystore with your own password/alias/protocol is not currently supported. For more information on generating keystores see these [instructions](https://tomcat.apache.org/tomcat-7.0-doc/ssl-howto.html).
+If you generate a keystore with custom passwords instead, then make sure to provide environment variables `AUDIT_SERVICE_KEYSTORE_PASS` and `AUDIT_SERVICE_KEY_PASS` (see override options below).
 
-Place this keystore file in a folder called `keystore` in audit-service-deploy. Name it `.keystore` or else provide your own custom path by setting `AUDIT_SERVICE_KEYSTORE` (e.g. `./mykeystore/ks.p12`).
+##### Deploy the Keystore
+The generated keystore file then needs placed in a folder called `keystore` in audit-service-deploy. Name it `.keystore` or else provide your own custom path by setting `AUDIT_SERVICE_KEYSTORE` (e.g. `./mykeystore/ks.p12`).
 
-You can optionally override the default HTTPS port (25081) by providing the environment variable `AUDIT_SERVICE_PORT_HTTPS`.
-
-Run the following command:
+##### Activate
+Run the following command to activate the HTTPS endpoint:
 
 `docker-compose -f docker-compose.yml -f docker-compose.https.yml up`.
 
-Additional override parameters can be set and their function is described below.
+##### Override Options
+The following table outlines the additional overrides supported in the `docker-compose.https.yml` file:
 
 <table>
   <tr>
@@ -277,7 +283,22 @@ Additional override parameters can be set and their function is described below.
   <tr>
     <td>AUDIT_SERVICE_KEYSTORE</td>
     <td>./keystore/.keystore</td>
-    <td>If you are activating the HTTPS port, you can override the default keystore location to provide your own keystore as a volume. This is the path of the keystore file (i.e. `./mykeystore/ks.p12`).</td>
+    <td>If you are activating the HTTPS port, you can override the default keystore location to provide your own keystore as a volume. This is the path of the keystore file (i.e. <code>./mykeystore/ks.p12</code>).</td>
+  </tr>
+  <tr>
+    <td>AUDIT_SERVICE_KEYSTORE_ALIAS</td>
+    <td>tomcat</td>
+    <td>If you generated your own keystore with a custom keystore alias, use this environment variable to update the Audit Web Service's keystore configuration in the <code>server.xml</code>. The default is "tomcat".</td>
+  </tr>
+  <tr>
+    <td>AUDIT_SERVICE_KEYSTORE_PASS</td>
+    <td>changeit</td>
+    <td>If you generated your own keystore with a custom keystore password, use this environment variable to update the Audit Web Service's keystore configuration in the <code>server.xml</code>. The default is "changeit".</td>
+  </tr>
+  <tr>
+    <td>AUDIT_SERVICE_KEY_PASS</td>
+    <td>changeit</td>
+    <td>If you generated your own keystore with a custom key password, use this environment variable to update the Audit Web Service's keystore configuration in the <code>server.xml</code>. The default is "changeit".</td>
   </tr>
 </table>
 
