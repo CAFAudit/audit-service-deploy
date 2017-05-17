@@ -25,7 +25,7 @@ The Docker Compose file contains the following services:
 [Elasticsearch](https://www.elastic.co/products/elasticsearch) is a search engine based on [Lucene](https://lucene.apache.org/core/). It provides a distributed, multi-tenant capable full-text search engine with an HTTP web interface and schema-free JSON documents. Elasticsearch is developed in Java and is released as open source under the terms of the Apache License.
 
 **Audit Web Service**
-The Audit Web Service is a RESTful Web Service and provides a simple API. It can be used to index audit event messages into Elasticsearch. Each audit event message will comprise a set of fixed fields including the application the audit event message is associated with, the user that triggered the audit event as well as the tenant that the user belongs to. The audit event message will also include additional fields specific to the application. 
+The Audit Web Service is a RESTful Web Service and provides a simple API. It can be used to index audit event messages into Elasticsearch. Each audit event message will comprise a set of fields including the application identifier, the user that triggered the audit event as well as the tenant that the user belongs to. 
 
 ### Usage
 
@@ -146,9 +146,9 @@ The health of the Elasticsearch container and / or cluster can be inspected by i
 
     Using a browser, navigate to the `/caf-audit-service-ui` endpoint on the Audit Web Service:  
 
-        http://docker-host:25080/caf-audit-service-ui
+        http://<DOCKER_HOST>:25080/caf-audit-service-ui
 
-    Adjust 'docker-host' to be the name of your own Docker Host and adjust the port if you are not using the default.
+    Replace `<DOCKER_HOST>` with the name of your own Docker Host and adjust the port if you are not using the default.
 
 8. Index an audit event message into Elasticsearch 
     Go to the `POST /auditevents` operation.
