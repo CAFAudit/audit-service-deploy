@@ -252,10 +252,6 @@ The following override files are supplied alongside the main Docker Compose file
   </tr>
 </table>
 
-Use the -f switch to apply override files.  For example, to start the services with the docker-compose.https.yml file applied run the following command:
-
-    docker-compose -f docker-compose.yml -f docker-compose.https.yml up
-
 #### Activating HTTPS Endpoint
 
 The `docker-compose.https.yml` override file should be used to activate a HTTPS endpoint for secure communication with the Audit Web Service.
@@ -273,9 +269,9 @@ If you generate a keystore with custom passwords instead, then make sure to prov
 The generated keystore file then needs placed in a folder called `keystore` in audit-service-deploy. Name it `.keystore` or else provide your own custom path by setting `AUDIT_SERVICE_KEYSTORE` (e.g. `./mykeystore/ks.p12`).
 
 ##### Activate
-Run the following command to activate the HTTPS endpoint:
+The override file, `docker-compose.https.yml`, needs applied in order to activate the HTTPS endpoint. Run the following command:
 
-`docker-compose -f docker-compose.yml -f docker-compose.https.yml up
+    docker-compose -f docker-compose.yml -f docker-compose.https.yml up
 
 ##### Override Options
 The following table outlines the additional overrides supported in the `docker-compose.https.yml` file:
