@@ -89,6 +89,10 @@ The following parameters may be set:
         <td>25080</td>
         <td>This is the port that the Audit Web Service is configured to listen on.</td>
       </tr>
+	  <tr>
+		<td>CAF_LOG_LEVEL</td>
+		<td>INFO</td>
+		<td>This environment variable can be used to override the current default logging level in Audit Web Service. The current default level is INFO.
     </table>
 
 3. Deploy the services  
