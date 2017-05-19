@@ -92,7 +92,7 @@ The following parameters may be set:
 	  <tr>
 		<td>CAF_LOG_LEVEL</td>
 		<td>INFO</td>
-		<td>This environment variable can be used to override the current default logging level in Audit Web Service. The current default level is INFO.</td>
+	    <td>The logging level for the Audit Web Service. The supported loggin levels include WARN,ERROR,INFO,TRACE,DEBUG or ALL.</td>
 	  </tr>
     </table>
 
