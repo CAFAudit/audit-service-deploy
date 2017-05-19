@@ -92,7 +92,7 @@ The following parameters may be set:
 	  <tr>
 		<td>CAF_LOG_LEVEL</td>
 		<td>INFO</td>
-	    <td>The logging level for the Audit Web Service. The supported loggin levels include WARN,ERROR,INFO,TRACE,DEBUG or ALL.</td>
+	    <td>The logging level for the Audit Web Service. The supported logging levels are WARN, ERROR, INFO, TRACE, DEBUG or ALL.</td>
 	  </tr>
     </table>
 
