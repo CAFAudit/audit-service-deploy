@@ -122,25 +122,25 @@ First navigate to the folder where you have downloaded the files to and then run
 
     - Enter the following audit event message details into the `newAuditEvent` parameter:
 
-	    <pre><code>{
-		  "applicationId": "SampleApp",
-		  "processId": "77baef40-2744-46ab-9b69-a349a19930c5",
-		  "threadId": 1,
-		  "eventOrder": 1,
-		  "eventTime": "2017-05-16T12:16:11.174Z",
-		  "eventTimeSource": "myHostName",
-		  "userId": "test_user",
-		  "tenantId": "test_tenant",
-		  "correlationId": "test123",
-		  "eventTypeId": "viewDocument",
-		  "eventCategoryId": "documentEvents",
-		  "eventParams": [
-		  {
-		    "paramName": "docId",
-		    "paramType": "long",
-		    "paramValue": "123"
-		  } ]
-	    }</code></pre>
+			{
+			  "applicationId": "SampleApp",
+			  "processId": "77baef40-2744-46ab-9b69-a349a19930c5",
+			  "threadId": 1,
+			  "eventOrder": 1,
+			  "eventTime": "2017-05-16T12:16:11.174Z",
+			  "eventTimeSource": "myHostName",
+			  "userId": "test_user",
+			  "tenantId": "test_tenant",
+			  "correlationId": "test123",
+			  "eventTypeId": "viewDocument",
+			  "eventCategoryId": "documentEvents",
+			  "eventParams": [
+			  {
+			    "paramName": "docId",
+			    "paramType": "long",
+			    "paramValue": "123"
+			  } ]
+			}
 
 	- Click on the 'Try it out!' button.
 
@@ -150,7 +150,7 @@ First navigate to the folder where you have downloaded the files to and then run
   
     Response:  
 
-	<pre><code>{
+	{
 	  "took" : 33,
 	  "timed_out" : false,
 	  "_shards" : {
@@ -183,7 +183,7 @@ First navigate to the folder where you have downloaded the files to and then run
 	      }
 	    ]
 	  }
-	}</code></pre>
+	}
 
 ### Override Files
 Docker Compose supports the concept of override files which can be used to modify the service definitions in the main Docker Compose files, or to add extra service definitions.
