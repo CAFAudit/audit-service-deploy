@@ -150,40 +150,40 @@ First navigate to the folder where you have downloaded the files to and then run
   
     Response:  
 
-	{
-	  "took" : 33,
-	  "timed_out" : false,
-	  "_shards" : {
-	    "total" : 5,
-	    "successful" : 5,
-	    "failed" : 0
-	  },
-	  "hits" : {
-	    "total" : 1,
-	    "max_score" : 0.2876821,
-	    "hits" : [
-	      {
-	        "_index" : "test_tenant_audit",
-	        "_type" : "cafAuditEvent",
-	        "_id" : "AVwQeJ05uf04cpVnLlCF",
-	        "_score" : 0.2876821,
-	        "_source" : {
-	          "threadId" : 1,
-	          "eventTypeId" : "viewDocument",
-	          "processId" : "77baef40-2744-46ab-9b69-a349a19930c5",
-	          "eventTime" : "2017-05-16T12:16:11.174Z",
-	          "eventTimeSource" : "myHostName",
-	          "correlationId" : "test123",
-	          "applicationId" : "SampleApp",
-	          "eventOrder" : 1,
-	          "userId" : "test_user",
-	          "eventCategoryId" : "documentEvents",
-	          "docId_CALng" : 123
-	        }
-	      }
-	    ]
-	  }
-	}
+		{
+		  "took" : 33,
+		  "timed_out" : false,
+		  "_shards" : {
+		    "total" : 5,
+		    "successful" : 5,
+		    "failed" : 0
+		  },
+		  "hits" : {
+		    "total" : 1,
+		    "max_score" : 0.2876821,
+		    "hits" : [
+		      {
+		        "_index" : "test_tenant_audit",
+		        "_type" : "cafAuditEvent",
+		        "_id" : "AVwQeJ05uf04cpVnLlCF",
+		        "_score" : 0.2876821,
+		        "_source" : {
+		          "threadId" : 1,
+		          "eventTypeId" : "viewDocument",
+		          "processId" : "77baef40-2744-46ab-9b69-a349a19930c5",
+		          "eventTime" : "2017-05-16T12:16:11.174Z",
+		          "eventTimeSource" : "myHostName",
+		          "correlationId" : "test123",
+		          "applicationId" : "SampleApp",
+		          "eventOrder" : 1,
+		          "userId" : "test_user",
+		          "eventCategoryId" : "documentEvents",
+		          "docId_CALng" : 123
+		        }
+		      }
+		    ]
+		  }
+		}
 
 ### Override Files
 Docker Compose supports the concept of override files which can be used to modify the service definitions in the main Docker Compose files, or to add extra service definitions.
