@@ -9,7 +9,7 @@
 			"instances": 1,
 			"container": {
 				"docker": {
-					"image": "${DOCKER_REGISTRY}/caf/audit-service:3.1.0-SNAPSHOT",
+					"image": "${DOCKER_REGISTRY}/audit-service:3.1.0",
 					"network": "BRIDGE",
 					"portMappings": [{
 						"containerPort": 8080,
