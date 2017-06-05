@@ -3,27 +3,26 @@ version: '3'
 services:
 
   auditService:
-    image: rh7-artifactory.svs.hpeswlab.net:8443/caf/audit-service:3.1.0-SNAPSHOT
-    ports:
-      - "${CAF_AUDIT_SERVICE_PORT:-25080}:8080"
-    environment:
-      CAF_ELASTIC_HOST_AND_PORT: ${ELASTICSEARCH_HOST_AND_PORT:-elasticsearch1:9300}
-      CAF_ELASTIC_CLUSTER_NAME: ${ELASTICSEARCH_CLUSTER_NAME:-elasticsearch-cluster}
-      CAF_ELASTIC_NUMBER_OF_SHARDS: ${ELASTICSEARCH_NUMBER_OF_SHARDS:-5}
-      CAF_ELASTIC_NUMBER_OF_REPLICAS: ${ELASTICSEARCH_NUMBER_OF_REPLICAS:-1}
+    env_file:
+      - ./elasticsearch.env
+    image: cafaudit/audit-service:3.1.0
     deploy:
+      restart_policy:
+        condition: any
+        delay: 10s
+        max_attempts: 5
+        window: 120s    
+      mode: replicated
       replicas: 2
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 1536M
+        reservations:
+          cpus: '0.25'
+          memory: 768M		  
       update_config:
         parallelism: 2
         delay: 10s
-      restart_policy:
-        condition: on-failure
-        delay: 10s
-    resources:
-      limits:
-        cpus: '0.5'
-        memory: 512M
-      reservations:
-        cpus: '0.05'
-        memory: 256M	
-		
+    ports:
+      - "25080:8080"
