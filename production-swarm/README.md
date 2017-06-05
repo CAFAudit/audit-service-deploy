@@ -5,7 +5,7 @@ The Production Docker Stack Deployment supports the deployment of the CAF Audit 
 ## Service Configuration
 
 ### Docker Stack
-The `docker-stack.yml` file describes the Docker deployment information required for the Job Service. The file uses property substitution to retrieve values from Environment variables. A number of these Environment variables are **required** for the Job Service deployment. These Environment variables are configurable in the RabbitMQ and Postgres environment files.
+The `docker-stack.yml` file describes the Docker deployment information required for the CAF Audit Web Service. The file uses property substitution to retrieve values from Environment variables. A number of these Environment variables are **required** for the CAF Audit Web Service deployment. These Environment variables are configurable in the Elasticsearch environment file.
 
 ### Docker Environment
 The `elasticsearch.env` file supports configurable property settings necessary for service deployment.
