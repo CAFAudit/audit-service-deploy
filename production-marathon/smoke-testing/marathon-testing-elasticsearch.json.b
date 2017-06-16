@@ -4,7 +4,7 @@
         "container": {
             "docker": {
                 "forcePullImage": true,
-                "image": "docker.elastic.co/elasticsearch/elasticsearch:5.3.0",
+                "image": "docker.elastic.co/elasticsearch/elasticsearch:5.3.1",
                 "network": "BRIDGE",
                 "portMappings": [
                     {
