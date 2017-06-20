@@ -4,7 +4,7 @@ The Production Marathon deployment supports the deployment of the CAF Audit Web 
 
 ## Prerequisites
 
-If you do not have a production ready deployment of Elasticsearch, to test the production CAF Audit Web Service deployment against, follow the [production-prereqs/README.md](production-prereqs/README.md). These instructions will guide you on how to setup a non-production instance of Elasticsearch on Mesos/Marathon for the purposes of smoke testing.
+If you do not have a production ready deployment of Elasticsearch to test the production CAF Audit Web Service deployment against, follow the [production-prereqs/README.md](production-prereqs/README.md). These instructions will guide you on how to setup a non-production instance of Elasticsearch on Mesos/Marathon for the purposes of smoke testing.
 
 ## Service Configuration
 
