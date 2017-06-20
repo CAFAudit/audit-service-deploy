@@ -14,8 +14,6 @@ The `marathon.json.b` template file describes the marathon deployment informatio
 ### Marathon Environment
 The `environment.sh` file supports configurable property settings necessary for service deployment. These include:
 
-- `DOCKER_REGISTRY`: This setting configures the docker repository that the CAF Audit Web Service image will be pulled from. 
-
 - `CAF_AUDIT_SERVICE_PORT`: This property configures the port that the CAF Audit Web Service listens on. 
 
 - `CAF_ELASTIC_HOST_AND_PORT`: This setting configures a comma separated list of Elasticsearch HOST:TRANSPORT_PORT value pairs. e.g. 192.168.56.10:9300,192.168.56.20:9300.
